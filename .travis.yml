@@ -1,6 +1,7 @@
 language: php
 php:
     - "5.4"
+script: phpunit --bootstrap phpunit.xml
 deploy:
   provider: heroku
   api_key:
