@@ -15,7 +15,4 @@ and open the template in the editor.
 </phpunit-->
 
 <phpunit colors="false">
-    <testsuites name="my tests">
-        <directory>./tests</directory>
-    </testsuites>
 </phpunit>
