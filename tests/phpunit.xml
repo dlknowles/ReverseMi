@@ -14,4 +14,8 @@ and open the template in the editor.
          stopOnFailure="true">
 </phpunit-->
 
-<phpunit colors="false" />
+<phpunit colors="false">
+    <testsuites name="my tests">
+        <directory>./tests</directory>
+    </testsuites>
+</phpunit>
