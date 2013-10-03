@@ -1,7 +1,7 @@
 language: php
 php:
     - "5.4"
-script: build.sh
+script: ./build.sh
 deploy:
   provider: heroku
   api_key:
