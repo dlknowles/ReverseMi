@@ -1,11 +1,4 @@
 language: php
 php:
     - "5.4"
-script:
-deploy:
-  provider: heroku
-  api_key:
-    secure: F72UsSsjUkID0bh9vnTLSiHvfmA3JGoZLZYciKdms+bLZdSTT3YokgJy5+7dl7tOPzgMMflQLYFAJBfrHwk5l5mIgNKZ+wfAmpm1FOLwCPSzBaFzgtBetmjf4IvxvWXeFyHYcGUs7W3EVdnlHisR5Sw7/CjT3x1LaVEJh/dgaLw=
-  app: ReverseMi
-  on:
-    repo: dlknowles/ReverseMi
+    
