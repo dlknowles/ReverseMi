@@ -9,8 +9,8 @@ var gCanvas,        // the canvas element
 
 var boardWidth  = 8,    // number of columns on the board
     boardHeight = 8,    // number of rows on the board
-    diskWidth   = 50,   // the width of the player disks
-    diskHeight  = 50,   // the height of the player disks
+    diskWidth   = 40,   // the width of the player disks
+    diskHeight  = 40,   // the height of the player disks
     pixelWidth  = 1 + (boardWidth * diskWidth), // the width of the game canvas in pixels
     pixelHeight = 1 + (boardWidth * diskHeight),// the height of the game canvas in pixels
     boardStrokeStyle = '#000000',

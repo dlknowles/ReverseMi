@@ -1,9 +1,10 @@
 body {
-    font-size: medium;
+/*    font-size: medium;
     font-family: monospace;
     color: #666666;
     margin: 0;
-    padding: 0;
+    padding: 0;*/
+    padding-top: 50px;
     /*background: #00CC00;*/
 }
 
@@ -11,7 +12,7 @@ canvas {
     /*border: 1px solid #333;*/
 }
 
-a:link, a:visited {
+/*a:link, a:visited {
     color: #0066CC;
     text-decoration: none;
 }
@@ -73,4 +74,4 @@ a:hover, a:active {
 
 .center_align {
     text-align: center;
-}
+}*/
