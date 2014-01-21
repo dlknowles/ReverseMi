@@ -1,1 +1,8 @@
-This is the readme file for ReverseMi.
+ReverseMi
+=======
+
+A simple HTML5 Reversi clone. 
+
+Currently, it is only multiplayer on the same computer. 
+
+Networked multiplayer and AI for single player to come as my time permits.
