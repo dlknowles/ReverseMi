@@ -1,3 +1,14 @@
+var game_modes = {
+    single: 1,
+    multi: 2
+};
+
+var difficulty_level = {
+    easy: 1,
+    normal: 2,
+    hard: 3
+};
+
 var gCanvas,        // the canvas element
     gCanvasContext, // the canvas context
     gStatusElement, // the HTML element that displays the game status
@@ -5,7 +16,7 @@ var gCanvas,        // the canvas element
     board,          // the game board state (array of Cell objects)
     numCells,       // the number of cells the board contains
     isRunning,      // is the game still running? (boolean)
-    currentPlayer;  // the current player value (1 or 2)
+    currentPlayer;  // the current player value (1 or 2)    
 
 var boardWidth  = 8,    // number of columns on the board
     boardHeight = 8,    // number of rows on the board
@@ -13,12 +24,15 @@ var boardWidth  = 8,    // number of columns on the board
     diskHeight  = 40,   // the height of the player disks
     pixelWidth  = 1 + (boardWidth * diskWidth), // the width of the game canvas in pixels
     pixelHeight = 1 + (boardWidth * diskHeight),// the height of the game canvas in pixels
-    boardStrokeStyle = '#000000',
-    boardFillStyle = '#CAE3D1',
-    player1FillStyle = '#000000',
-    player1StrokeStyle = '#000000',
-    player2FillStyle = '#ffffff',
-    player2StrokeStyle = '#000000';
+    boardStrokeStyle    = '#000000',
+    boardFillStyle      = '#CAE3D1',
+    player1FillStyle    = '#000000',
+    player1StrokeStyle  = '#000000',
+    player2FillStyle    = '#ffffff',
+    player2StrokeStyle  = '#000000',
+    humanPlayer = 1,    // player 1 or player 2?
+    mode        = game_modes.single,    // 1 = single player or 2 = multi player
+    difficulty  = difficulty_level.easy;
 
 /**
  * Represents a board cell containing a row, column, and player state. If the state is 0, no player occupies the 
@@ -79,7 +93,9 @@ function gCanvasOnClick(e) {
     }
 
     // if the cell is empty, run the clickOnEmptyCell function
-    clickOnEmptyCell(cellIndex);
+    if (IsHumanTurn()) {
+        clickOnEmptyCell(cellIndex);
+    }
 }
 
 /**
@@ -90,7 +106,7 @@ function gCanvasOnMouseMove(e) {
     var cellIndex = getCursorPosition(e);  
     
     // make sure the mouse is in bounds of the game board before doing anything.
-    if (cellIndex > -1 && cellIndex < numCells) {
+    if (IsHumanTurn() && cellIndex > -1 && cellIndex < numCells) {
         // look to see if the mouse is over a valid move.
         if (isValidMove(cellIndex)) {
             // if so, change the mouse cursor to the pointer to indicate a clickable cell.
@@ -108,13 +124,17 @@ function gCanvasOnMouseMove(e) {
     }     
 }
 
+function IsHumanTurn() {
+    return (mode === game_modes.multi || (mode === game_modes.single && currentPlayer === humanPlayer));
+}
+
 /**
  * Gets an array of all the valid moves the current player can make.
  */
 function getPlayerMoves() {
     //gStatusElement.innerHTML = '';
-    var playerMoves = new Array(),
-        opponent = Math.abs(currentPlayer - 2) + 1;
+    var playerMoves = new Array(); //,
+        // opponent = Math.abs(currentPlayer - 2) + 1;
 
     for (var i = 0; i < numCells; ++i) {
 
@@ -125,6 +145,30 @@ function getPlayerMoves() {
     }
 
     return playerMoves;
+}
+
+function cpuMove() {
+    // TODO: Implement CPU move
+    console.log(getPlayerMoves());   
+    
+    var moves = getPlayerMoves();
+    
+    if (moves.length > 0) {
+        switch (difficulty) {
+            case difficulty_level.easy:
+                clickOnEmptyCell(getRandomMove(moves));
+        }
+    }
+}
+
+function getRandomMove(moves) {
+    var rawIndex = Math.random() * moves.length;
+    var index = parseInt(rawIndex, 10);
+
+    console.log("rawIndex: " + rawIndex + "; index: " + index);
+    console.log("move: " + moves[index]);
+
+    return moves[index];
 }
 
 /**
@@ -140,10 +184,16 @@ function clickOnEmptyCell(cellIndex) {
         board[cellIndex].state = currentPlayer;
         flipDisks(cellIndex);
 
+        // TODO: Account for the case where the current player has no moves.
+        // TODO: Account for the case where neither player has moves and the board is not full.
         currentPlayer = Math.abs(currentPlayer - 2) + 1;
 
         // redraw the board.
         drawBoard();
+        
+        if (mode === game_modes.single && !IsHumanTurn()) {
+            cpuMove();
+        }
     }
     else {
         // otherwise, just return
